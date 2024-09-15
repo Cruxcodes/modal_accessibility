@@ -1,26 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useContext } from "react";
+import logo from "./logo.svg";
+import "./App.css";
+import "./styles/styles.css";
+import Modal from "./presentation/Modal";
+import ModalProvider, {
+  ModalContext,
+} from "./context/modal_context/ModalProvider";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <ModalProvider>
+      <div className="App">
+        <div>
+          <ModalDisplay />
+        </div>
+      </div>
+    </ModalProvider>
+  );
+}
+export default App;
+
+function ModalDisplay() {
+  const contextTest = useContext(ModalContext);
+
+  return (
+    <div className="modal">
+      {contextTest?.data.map((element, index) => {
+        return <Modal key={index} {...element} />;
+      })}
     </div>
   );
 }
-
-export default App;
