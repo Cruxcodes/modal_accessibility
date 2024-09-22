@@ -7,21 +7,32 @@ export const ModalContext = createContext<ModalProviderProps | null>(null);
 
 interface ModalProviderProps {
   data: ModalModel[];
+  selectedData?: ModalModel | null;
   updateList: (itemId: string) => void;
+  selectData: (selectedItem: ModalModel) => void;
 }
 
 const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [data, setData] = useState<ModalModel[]>(modalList);
+  const [selectedData, setSelectedData] = useState<ModalModel | null>();
 
   const updateList = (itemId: string) => {
     setData((prevData) => {
-      // Filter the list by excluding the item with the same modalId
       return prevData?.filter((element) => element.modalId !== itemId);
     });
+    if (itemId === selectedData?.modalId) {
+      setSelectedData(null);
+    }
+  };
+
+  const selectData = (selectedItem: ModalModel) => {
+    setSelectedData(selectedItem);
   };
 
   return (
-    <ModalContext.Provider value={{ data, updateList }}>
+    <ModalContext.Provider
+      value={{ data, selectedData, updateList, selectData }}
+    >
       {children}
     </ModalContext.Provider>
   );

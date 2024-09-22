@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import logo from "./logo.svg";
 import "./App.css";
 import "./styles/styles.css";
 import Modal from "./presentation/Modal";
@@ -24,10 +23,15 @@ function ModalDisplay() {
   const contextTest = useContext(ModalContext);
 
   return (
-    <div className="modal">
-      {contextTest?.data.map((element, index) => {
-        return <Modal key={index} {...element} />;
-      })}
+    <div className="main__container">
+      <div className="modal">
+        {contextTest?.data.map((element, index) => {
+          return <Modal key={index} {...element} />;
+        })}
+      </div>
+      <div>
+        {contextTest?.selectedData?.modalTitle}
+      </div>
     </div>
   );
 }
